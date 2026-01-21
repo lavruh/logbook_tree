@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:logbook_tree/domain/logbook_entry.dart';
 import 'package:logbook_tree/domain/logbook_provider.dart';
-import 'package:logbook_tree/domain/tags_provider.dart';
 import 'package:logbook_tree/ui/equiipment_tree_widget.dart';
 import 'package:logbook_tree/ui/settings_screen.dart';
 import 'package:logbook_tree/ui/tags_select_widget.dart';
@@ -74,21 +73,7 @@ class _LogbookScreenDesktopState extends State<LogbookScreenDesktop> {
             flex: 1,
             child: Container(
               padding: const EdgeInsets.all(16.0),
-              child: Flexible(
-                child: Consumer(
-                  builder: (context, ref, _) {
-                    return ref
-                        .watch(tagsProvider)
-                        .when(
-                          data: (data) {
-                            return TagsSelectWidget();
-                          },
-                          error: (obj, stack) => Text(obj.toString()),
-                          loading: () => CircularProgressIndicator(),
-                        );
-                  },
-                ),
-              ),
+              child: TagsSelectWidget(),
             ),
           ),
         ],

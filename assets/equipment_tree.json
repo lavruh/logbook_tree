@@ -1,0 +1,37 @@
+{
+"Compressors":{"tags":["#compressor"], "children":{
+    "Working air fwd":{"tags":["#compressor", "#air", "#fwd"], "children":{}}, 
+    "Working air aft":{"tags":["#compressor", "#air", "#aft"], "children":{}}, 
+    "Instrumental":{"tags":["#compressor", "#air", "#instrumental"], "children":{}}, 
+    "Starting air 1":{"tags":["#compressor", "#air", "#starting", "#ps"], "children":{}}, 
+    "Starting air 2":{"tags":["#compressor", "#air", "#starting", "#sb"], "children":{}}
+}},
+"Deck equipment":{ "tags":["#deck"], "children":{
+    "Deck crane":{"tags":["#crane", "#deck"], "children":{}},
+    "Aft crane":{"tags":["#crane", "#aft"], "children":{}},
+    "Winches":{"tags":["#winch"], "children":{
+        "Anchor winch":{"tags":["#winch", "#anchor"], "children":{}},
+        "Mooring winch":{"tags":["#winch", "#mooring"], "children":{}},
+        "Trunnion":{"tags":["#winch", "#trunnion"], "children":{}},
+        "Intermediate":{"tags":["#winch", "#intermediate"], "children":{}},
+        "Draghead":{"tags":["#winch", "#draghead"], "children":{}}
+    }}}
+  },
+"Dredging equipment":{ "tags":["#dredge"], "children":{
+    "Dredge pump":{"tags":["#dredge", "#pump"], "children":{}},
+    "Dredge valves":{"tags":["#dredge", "#valve"], "children":{}}
+}},    
+"Engines":{
+    "tags":["#engine"], 
+    "children":{
+        "Main engine PS":{"tags":["#main", "#engine", "#ps"], "children":{}},
+        "Main engine SB":{"tags":["#main", "#engine", "#sb"], "children":{}},
+        "Auxiliary engine":{"tags":["#aux", "#engine"], "children":{}}
+        }
+    },
+
+"Separators":{ "tags":["#separator"], "children":{
+    "Fuel":{"tags":["#separator", "#fuel"], "children":{}},
+    "LO":{"tags":["#separator", "#oil", "#lub"], "children":{}}
+}}
+}

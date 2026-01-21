@@ -1,0 +1,6 @@
+Please read logbook in format yaml from 2026-12.txt. 
+Read every line, each line starts from •\t and add or update tags. 
+Please use only tags from tags.yaml.
+Result should be copy of existing yaml file with tags added to each line at the end of each line. 
+For example : •\t14:15Start SB ME. #sb #main #engine
+Hints: ME is #main #engine, DH is #draghead, JP is #jet #pump

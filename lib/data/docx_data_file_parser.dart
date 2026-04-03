@@ -23,7 +23,7 @@ class DocxDataFileParser implements IDataFileParser {
   Stream<LogbookEntry> parseFile(File f) async* {
     final bytes = await f.readAsBytes();
     final text = docxToText(bytes);
-    final filePath = f.path;
+    final filePath = p.basename(f.path);
 
     final lines = text.split('\n');
 

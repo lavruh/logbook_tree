@@ -104,24 +104,21 @@ class _LogbookScreenDesktopState extends State<LogbookScreenDesktop> {
           );
         }
       }
-      int idx = 0;
-      final data = e.text.split("#").map((e) {
-        idx++;
-        if (idx == 1) {
-          return TextSpan(text: e);
-        }
-        return TextSpan(
-          text: "#$e",
-          style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey),
-        );
-      }).toList();
 
       children.add(
-        Text.rich(
-          TextSpan(
-            text: "${DateFormat("yyyy-MM-dd").format(e.date)} :  ",
-            children: data,
-          ),
+        Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text.rich(
+              TextSpan(
+                text: "${DateFormat("yyyy-MM-dd").format(e.date)} :  ",
+                children: [TextSpan(text: e.text)],
+              ),
+            ),
+            ...e.tags.map(
+              (tag) => TextButton(onPressed: () {}, child: Text(tag)),
+            ),
+          ],
         ),
       );
       lastItemDate = e.date;

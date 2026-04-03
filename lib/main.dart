@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logbook_tree/domain/app_dir_provider.dart';
+import 'package:logbook_tree/domain/argument_handler.dart';
 import 'package:logbook_tree/ui/settings_screen.dart';
 import 'ui/logbook_screen_desktop.dart';
 
-void main() {
+void main(List<String> args) {
+  final arguments = ArgumentHandler();
+  arguments.handleArgs(args);
   runApp(ProviderScope(child: const MyApp()));
 }
 

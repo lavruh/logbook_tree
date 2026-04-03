@@ -46,4 +46,4 @@ final class TagsProvider
   }
 }
 
-String _$tagsHash() => r'506c783b7bf9b99f9624318620d79ac7f7841573';
+String _$tagsHash() => r'fe95661886815951b3d7815eb9a8a173a3c7f58f';

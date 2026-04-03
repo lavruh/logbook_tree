@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../domain/messenger.dart';
+
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
@@ -102,6 +104,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Text('Save Settings'),
+            ),
+            const SizedBox(height: 20),
+            Text("Debug messages:"),
+            SizedBox(
+              height: 0.7 * MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                child: SelectableText(ref.watch(messengerProvider)),
+              ),
             ),
           ],
         ),

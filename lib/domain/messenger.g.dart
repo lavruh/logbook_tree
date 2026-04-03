@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'selected.dart';
+part of 'messenger.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,50 +9,50 @@ part of 'selected.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(Selected)
-final selectedProvider = SelectedProvider._();
+@ProviderFor(Messenger)
+final messengerProvider = MessengerProvider._();
 
-final class SelectedProvider extends $NotifierProvider<Selected, List<String>> {
-  SelectedProvider._()
+final class MessengerProvider extends $NotifierProvider<Messenger, String> {
+  MessengerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'selectedProvider',
-        isAutoDispose: true,
+        name: r'messengerProvider',
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$selectedHash();
+  String debugGetCreateSourceHash() => _$messengerHash();
 
   @$internal
   @override
-  Selected create() => Selected();
+  Messenger create() => Messenger();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<String> value) {
+  Override overrideWithValue(String value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<List<String>>(value),
+      providerOverride: $SyncValueProvider<String>(value),
     );
   }
 }
 
-String _$selectedHash() => r'cb4be1e965d18299d1ed0bea874b7c08ed176041';
+String _$messengerHash() => r'b5a330bad17b47bf58a9021c9846bcf6a49157aa';
 
-abstract class _$Selected extends $Notifier<List<String>> {
-  List<String> build();
+abstract class _$Messenger extends $Notifier<String> {
+  String build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<List<String>, List<String>>;
+    final ref = this.ref as $Ref<String, String>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<List<String>, List<String>>,
-              List<String>,
+              AnyNotifier<String, String>,
+              String,
               Object?,
               Object?
             >;

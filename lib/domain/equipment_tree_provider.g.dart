@@ -44,7 +44,7 @@ final class EquipmentTreeProvider
   }
 }
 
-String _$equipmentTreeHash() => r'0a6cb147601bb037c13fb9f0264f449a83830a25';
+String _$equipmentTreeHash() => r'd23002347de0f2b7149f84d1c0d3f8a547b2691b';
 
 abstract class _$EquipmentTree
     extends $Notifier<List<TreeSliverNode<EquipmentNode>>> {

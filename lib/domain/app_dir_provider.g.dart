@@ -45,4 +45,4 @@ final class AppDirProvider
   }
 }
 
-String _$appDirHash() => r'70c2eab0a2e3a5085af8fefbe20053dbdfb0059f';
+String _$appDirHash() => r'b015843788e2cd610276bf6790d02a819503e93d';

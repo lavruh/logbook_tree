@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:logbook_tree/data/i_logbook_data.dart';
 import 'package:logbook_tree/domain/logbook_entry.dart';
 import 'package:path/path.dart' as path;
+import 'package:path/path.dart' as p;
 
 /// Parses a text with bullet points into a stream of individual entries.
 ///
@@ -76,7 +77,11 @@ Stream<LogbookEntry> _parseLogFile({
     if (dayRegExp.hasMatch(entry)) {
       if (day > 0 && text.isNotEmpty) {
         await for (final entryText in _textToEntriesParser(text)) {
-          yield LogbookEntry(date: DateTime(year, month, day), text: entryText);
+          yield LogbookEntry(
+            date: DateTime(year, month, day),
+            text: entryText,
+            sourceName: p.basename(file.path),
+          );
         }
       }
 

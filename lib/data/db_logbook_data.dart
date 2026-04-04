@@ -29,7 +29,6 @@ class DbLogbookData implements LogbookData {
     final db = _database;
     if (db != null) {
       final entries = await _logbookStore.find(db);
-      print("get logbook entries ${entries.length}");
       for (final entry in entries) {
         yield LogbookEntry.fromMap(entry.value);
       }

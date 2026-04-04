@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:logbook_tree/domain/app_dir_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:path/path.dart' as p;
 
 part 'equipment_tree_provider.g.dart';
 
@@ -19,20 +17,10 @@ class EquipmentTree extends _$EquipmentTree {
         .watch(appDirProvider)
         .when(
           data: (val) async {
-            final appDirPath = val.path;
-            final filePath = p.join(appDirPath, "equipment_tree.json");
-
             try {
-              final file = File(filePath);
-              if (!await file.exists()) {
-                final assetFileData = await rootBundle.loadString(
-                  'assets/equipment_tree.json',
-                );
-                file.writeAsStringSync(assetFileData);
-                return [];
-              }
-
-              final jsonString = await file.readAsString();
+              final jsonString = await rootBundle.loadString(
+                'assets/equipment_tree.json',
+              );
               final Map<String, dynamic> jsonData = jsonDecode(jsonString);
 
               final t = _buildTreeNodes(jsonData);

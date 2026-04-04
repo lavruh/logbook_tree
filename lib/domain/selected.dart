@@ -33,5 +33,7 @@ class Selected extends _$Selected {
     }
   }
 
+  void clear() => state = [];
+
   bool isSelected(String val) => state.contains(val);
 }

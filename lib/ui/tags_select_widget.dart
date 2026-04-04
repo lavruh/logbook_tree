@@ -9,7 +9,7 @@ class TagsSelectWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tags = ref.watch(tagsProvider);
+    final tags = ref.watch(tagsFilteredProvider);
     final selected = ref.watch(selectedProvider);
 
     return tags.when(

@@ -29,6 +29,7 @@ class DbLogbookData implements LogbookData {
     final db = _database;
     if (db != null) {
       final entries = await _logbookStore.find(db);
+      print("get logbook entries ${entries.length}");
       for (final entry in entries) {
         yield LogbookEntry.fromMap(entry.value);
       }
@@ -40,8 +41,8 @@ class DbLogbookData implements LogbookData {
     if (!File(dbPath).existsSync()) {
       File(dbPath).createSync();
     }
-    _database ??= await databaseFactoryIo.openDatabase(dbPath);
-    if (_database != null) {
+    if (_database == null) {
+      _database ??= await databaseFactoryIo.openDatabase(dbPath);
       _logbookStore = StoreRef<int, Map<String, dynamic>>('logbook');
     }
   }
@@ -63,7 +64,9 @@ class DbLogbookData implements LogbookData {
 
         await for (final entry in entries) {
           if (await hasSameEntryInDb(entry.uid)) {
-            _messenger.println('Entry already exists in database: ${entry.text}');
+            _messenger.println(
+              'Entry already exists in database: ${entry.text}',
+            );
             continue;
           }
           try {
@@ -86,5 +89,34 @@ class DbLogbookData implements LogbookData {
       finder: Finder(filter: Filter.equals("uid", uid)),
     );
     return entry != null;
+  }
+
+  @override
+  Future<void> deleteLogbookEntry({required LogbookEntry entry}) {
+    // TODO: implement deleteLogbookEntry
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateLogbookEntry({required LogbookEntry updatedEntry}) async {
+    final db = _database;
+    if (db == null) {
+      throw StateError('Database not initialized');
+    }
+
+    final existingEntry = await _logbookStore.findFirst(
+      db,
+      finder: Finder(filter: Filter.equals("uid", updatedEntry.uid)),
+    );
+
+    if (existingEntry == null) {
+      throw StateError('Entry with UID ${updatedEntry.uid} not found');
+    }
+
+    await _logbookStore.update(
+      db,
+      updatedEntry.toMap(),
+      finder: Finder(filter: Filter.equals("uid", updatedEntry.uid)),
+    );
   }
 }

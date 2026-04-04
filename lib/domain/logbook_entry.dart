@@ -6,11 +6,12 @@ class LogbookEntry {
   final String sourceName;
 
   LogbookEntry({
+    int? uid,
     required this.date,
     required this.text,
     this.tags = const [],
     required this.sourceName,
-  }) : uid = date.hashCode ^ text.hashCode;
+  }) : uid = uid ?? date.hashCode ^ text.hashCode;
 
 
   LogbookEntry copyWith({
@@ -20,6 +21,7 @@ class LogbookEntry {
     String? sourceName,
   }) {
     return LogbookEntry(
+      uid: uid,
       date: date ?? this.date,
       text: text ?? this.text,
       tags: tags ?? this.tags,

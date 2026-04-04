@@ -40,7 +40,7 @@ final class MessengerProvider extends $NotifierProvider<Messenger, String> {
   }
 }
 
-String _$messengerHash() => r'b5a330bad17b47bf58a9021c9846bcf6a49157aa';
+String _$messengerHash() => r'898f35a3c8478ecf2a00322a8eeeea4e3a208e9b';
 
 abstract class _$Messenger extends $Notifier<String> {
   String build();

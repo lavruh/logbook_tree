@@ -59,6 +59,18 @@ class RednoteLogbookData implements LogbookData {
       }
     }
   }
+
+  @override
+  Future<void> deleteLogbookEntry({required LogbookEntry entry}) {
+    // TODO: implement deleteLogbookEntry
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> updateLogbookEntry({required LogbookEntry updatedEntry}) {
+    // TODO: implement updateLogbookEntry
+    throw UnimplementedError();
+  }
 }
 
 Stream<LogbookEntry> _parseLogFile({

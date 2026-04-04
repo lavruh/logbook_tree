@@ -8,4 +8,5 @@ class TextFilter extends _$TextFilter {
   String build() => "";
 
   void filter(String val) => state = val;
+  void clear() => state = "";
 }

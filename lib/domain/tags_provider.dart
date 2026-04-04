@@ -29,8 +29,14 @@ Future<List<String>> tags(Ref ref) async {
         error: (e, s) => throw e,
         loading: () {},
       );
-  final textFilter = ref.watch(textFilterProvider);
-
   tags.sort((a, b) => a.compareTo(b));
-  return tags.where((t) => t.contains(textFilter)).toList();
+  return tags;
+}
+
+@riverpod
+Future<List<String>> tagsFiltered(Ref ref) async {
+  final textFilter = ref.watch(textFilterProvider);
+  final tags = ref.watch(tagsProvider);
+  if(textFilter.isEmpty) return tags.value ?? [];
+  return tags.value?.where((t) => t.contains(textFilter)).toList() ?? [];
 }

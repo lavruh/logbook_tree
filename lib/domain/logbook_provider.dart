@@ -14,10 +14,15 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'logbook_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class Logbook extends _$Logbook {
+  late DbLogbookData _logbookData;
+  late Messenger _messenger;
+  bool isInit = false;
+
   @override
   List<LogbookEntry> build() {
+    _messenger = ref.read(messengerProvider.notifier);
     ref.watch(appDirProvider).whenData((dir) {
       loadLogbookFromDirectory(dir);
     });
@@ -26,17 +31,38 @@ class Logbook extends _$Logbook {
 
   Future<void> loadLogbookFromDirectory(Directory dir) async {
     final availableTags = ref.watch(tagsProvider).value;
-    final messenger = ref.read(messengerProvider.notifier);
-    if(availableTags == null) return;
-    final logbookData = DbLogbookData(
-      messenger: ref.read(messengerProvider.notifier),
-      dataParser: DocxDataFileParser(messenger: messenger),
-      tagger: OllamaTaggerService(messenger: messenger, availableTags: availableTags),
-    );
-    await for (final entry in logbookData.getLogbookEntries(
+    if (availableTags == null) return;
+    if (!isInit) {
+      _logbookData = DbLogbookData(
+        messenger: ref.read(messengerProvider.notifier),
+        dataParser: DocxDataFileParser(messenger: _messenger),
+        tagger: OllamaTaggerService(
+          messenger: _messenger,
+          availableTags: availableTags,
+        ),
+      );
+      isInit = true;
+    }
+    List<LogbookEntry> tmp = [];
+    await for (final entry in _logbookData.getLogbookEntries(
       sourcePath: dir.path,
     )) {
-      state = [...state, entry];
+      tmp = [...tmp, entry];
+    }
+    state = tmp;
+  }
+
+  Future<void> updateLogbookEntry({required LogbookEntry updatedEntry}) async {
+    try {
+      await _logbookData.updateLogbookEntry(updatedEntry: updatedEntry);
+
+      final updatedEntries = state
+          .where((e) => e.uid != updatedEntry.uid)
+          .toList();
+      updatedEntries.add(updatedEntry);
+      state = updatedEntries;
+    } catch (e) {
+      _messenger.println("Error updating logbook entry: $e");
     }
   }
 }

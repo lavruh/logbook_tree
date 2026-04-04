@@ -20,7 +20,7 @@ final class LogbookProvider
         argument: null,
         retry: null,
         name: r'logbookProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -41,7 +41,7 @@ final class LogbookProvider
   }
 }
 
-String _$logbookHash() => r'7166d503ab749e9ee6dc418149ec21d666022fe0';
+String _$logbookHash() => r'760d77b51c319d7fce46a4be8f7adc923582d93a';
 
 abstract class _$Logbook extends $Notifier<List<LogbookEntry>> {
   List<LogbookEntry> build();
@@ -106,4 +106,4 @@ final class FilteredLogbookProvider
   }
 }
 
-String _$filteredLogbookHash() => r'e59fa0d20783a93ee114d08a57b5ef6085a39b16';
+String _$filteredLogbookHash() => r'83c53388932acef5d996be015339c3c754b3ef3d';

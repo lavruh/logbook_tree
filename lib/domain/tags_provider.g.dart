@@ -46,7 +46,7 @@ final class TagsProvider
   }
 }
 
-String _$tagsHash() => r'd890070f0bd6ab21633c39ce2b5a093722b8b23f';
+String _$tagsHash() => r'2fe449c8802b5a810cb9e0533c74513711e94cdd';
 
 @ProviderFor(tagsFiltered)
 final tagsFilteredProvider = TagsFilteredProvider._();
@@ -85,4 +85,4 @@ final class TagsFilteredProvider
   }
 }
 
-String _$tagsFilteredHash() => r'16621b86c3840b9ac6fa71e091472cc0e9191c07';
+String _$tagsFilteredHash() => r'1a07566b21cceee038402475925463e5aa2a0014';

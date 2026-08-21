@@ -40,13 +40,13 @@ final class SelectedProvider extends $NotifierProvider<Selected, List<String>> {
   }
 }
 
-String _$selectedHash() => r'cb4be1e965d18299d1ed0bea874b7c08ed176041';
+String _$selectedHash() => r'8c48a553cdfecccc4be71a401e307aad0ab3362b';
 
 abstract class _$Selected extends $Notifier<List<String>> {
   List<String> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<List<String>, List<String>>;
     final element =
         ref.element
@@ -56,6 +56,6 @@ abstract class _$Selected extends $Notifier<List<String>> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

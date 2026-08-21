@@ -44,14 +44,14 @@ final class EquipmentTreeProvider
   }
 }
 
-String _$equipmentTreeHash() => r'd23002347de0f2b7149f84d1c0d3f8a547b2691b';
+String _$equipmentTreeHash() => r'0c3fa4bfa27296c7525d7665cc6efe6801bb72ab';
 
 abstract class _$EquipmentTree
     extends $Notifier<List<TreeSliverNode<EquipmentNode>>> {
   List<TreeSliverNode<EquipmentNode>> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref =
         this.ref
             as $Ref<
@@ -69,6 +69,6 @@ abstract class _$EquipmentTree
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

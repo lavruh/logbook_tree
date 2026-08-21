@@ -41,13 +41,13 @@ final class LogbookProvider
   }
 }
 
-String _$logbookHash() => r'760d77b51c319d7fce46a4be8f7adc923582d93a';
+String _$logbookHash() => r'37d0daeb0d20fcc91b1b4f23bd703e13bff67195';
 
 abstract class _$Logbook extends $Notifier<List<LogbookEntry>> {
   List<LogbookEntry> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<List<LogbookEntry>, List<LogbookEntry>>;
     final element =
         ref.element
@@ -57,7 +57,7 @@ abstract class _$Logbook extends $Notifier<List<LogbookEntry>> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 
@@ -106,4 +106,4 @@ final class FilteredLogbookProvider
   }
 }
 
-String _$filteredLogbookHash() => r'83c53388932acef5d996be015339c3c754b3ef3d';
+String _$filteredLogbookHash() => r'6025e488dcee546c4b58d452e01910cae6949068';

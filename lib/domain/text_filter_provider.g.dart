@@ -40,13 +40,13 @@ final class TextFilterProvider extends $NotifierProvider<TextFilter, String> {
   }
 }
 
-String _$textFilterHash() => r'54493d6b8c3566fd4e245159077df213f5ea4b82';
+String _$textFilterHash() => r'4572dae7d73e892c8591b084ac3e71ef341a0480';
 
 abstract class _$TextFilter extends $Notifier<String> {
   String build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<String, String>;
     final element =
         ref.element
@@ -56,6 +56,6 @@ abstract class _$TextFilter extends $Notifier<String> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }

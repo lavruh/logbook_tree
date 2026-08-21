@@ -91,9 +91,16 @@ class DbLogbookData implements LogbookData {
   }
 
   @override
-  Future<void> deleteLogbookEntry({required LogbookEntry entry}) {
-    // TODO: implement deleteLogbookEntry
-    throw UnimplementedError();
+  Future<void> deleteLogbookEntry({required LogbookEntry entry}) async {
+    final db = _database;
+    if (db == null) {
+      throw StateError('Database not initialized');
+    }
+
+    await _logbookStore.delete(
+      db,
+      finder: Finder(filter: Filter.equals("uid", entry.uid)),
+    );
   }
 
   @override

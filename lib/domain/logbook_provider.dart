@@ -65,6 +65,15 @@ class Logbook extends _$Logbook {
       _messenger.println("Error updating logbook entry: $e");
     }
   }
+
+  Future<void> deleteLogbookEntry({required LogbookEntry entry}) async {
+    try {
+      await _logbookData.deleteLogbookEntry(entry: entry);
+      state = state.where((e) => e.uid != entry.uid).toList();
+    } catch (e) {
+      _messenger.println("Error deleting logbook entry: $e");
+    }
+  }
 }
 
 @riverpod

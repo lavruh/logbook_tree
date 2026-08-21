@@ -11,7 +11,15 @@ class LogbookEntry {
     required this.text,
     this.tags = const [],
     required this.sourceName,
-  }) : uid = uid ?? date.hashCode ^ text.hashCode;
+  }) : uid = uid ?? generateUid(date: date, text: text);
+
+  static int generateUid({required DateTime date, required String text}) {
+    return date.hashCode ^ text.hashCode;
+  }
+
+  bool isUidCorrespondingToData() {
+    return uid == generateUid(date: date, text: text);
+  }
 
 
   LogbookEntry copyWith({
@@ -41,7 +49,9 @@ class LogbookEntry {
   }
 
   factory LogbookEntry.fromMap(Map<String, dynamic> map) {
+    final uid = map['uid'] is int ? map['uid'] : null;
     return LogbookEntry(
+      uid: uid,
       date: DateTime.parse(map['date']),
       text: map['text'],
       tags: List<String>.from(map['tags']),

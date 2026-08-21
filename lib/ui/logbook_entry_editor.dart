@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:logbook_tree/data/ollama_tagger_service.dart';
 import 'package:logbook_tree/domain/logbook_entry.dart';
+import 'package:logbook_tree/domain/logbook_provider.dart';
 import 'package:logbook_tree/domain/messenger.dart';
 import 'package:logbook_tree/domain/tags_provider.dart';
 
@@ -70,6 +71,11 @@ class _LogbookEntryEditorState extends ConsumerState<LogbookEntryEditor> {
     );
 
     Navigator.of(context).pop(updatedEntry);
+  }
+
+  void _deleteEntry() {
+    ref.read(logbookProvider.notifier).deleteLogbookEntry(entry: widget.entry);
+    Navigator.of(context).pop();
   }
 
   Future<void> _generateTags() async {
@@ -222,20 +228,65 @@ class _LogbookEntryEditorState extends ConsumerState<LogbookEntryEditor> {
             ),
             const Spacer(),
 
-            // Save button
+            // Delete and Save buttons
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
-              child: ElevatedButton(
-                onPressed: _saveEntry,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                ),
-                child: const Text(
-                  'Save',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Delete Entry'),
+                            content: const Text('Are you sure you want to delete this entry?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  _deleteEntry();
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Theme.of(context).colorScheme.error,
+                                ),
+                                child: const Text('Delete'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: Theme.of(context).colorScheme.error,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text(
+                        'Delete',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: _saveEntry,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                      child: const Text(
+                        'Save',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

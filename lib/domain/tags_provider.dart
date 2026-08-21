@@ -8,7 +8,10 @@ part 'tags_provider.g.dart';
 Future<List<String>> tags(Ref ref) async {
   List<String> tags = [];
   final tagsString = await rootBundle.loadString('assets/tags.yaml');
-  tags = tagsString.split('\n');
+  tags = tagsString
+      .split('\n')
+      .map((String t) => t.replaceAll('\r', ''))
+      .toList();
   tags.sort((a, b) => a.compareTo(b));
   return tags;
 }

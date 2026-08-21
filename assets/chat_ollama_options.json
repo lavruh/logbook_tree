@@ -1,0 +1,7 @@
+{
+  "model": "gemma3:4b",
+  "temperature": 0.7,
+  "numPredict": 128,
+  "topK": 40,
+  "topP": 0.9
+}

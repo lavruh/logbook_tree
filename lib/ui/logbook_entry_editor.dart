@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:logbook_tree/data/ollama_tagger_service.dart';
 import 'package:logbook_tree/domain/logbook_entry.dart';
+import 'package:logbook_tree/domain/messenger.dart';
 import 'package:logbook_tree/domain/tags_provider.dart';
 
 class LogbookEntryEditor extends ConsumerStatefulWidget {
@@ -20,6 +22,8 @@ class _LogbookEntryEditorState extends ConsumerState<LogbookEntryEditor> {
   late TextEditingController _textController;
   late DateTime _selectedDate;
   late List<String> _tags;
+  bool _isGeneratingTags = false;
+  OllamaTaggerService? _taggerService;
 
   @override
   void initState() {
@@ -27,6 +31,17 @@ class _LogbookEntryEditorState extends ConsumerState<LogbookEntryEditor> {
     _textController = TextEditingController(text: widget.entry.text);
     _selectedDate = widget.entry.date;
     _tags = List.from(widget.entry.tags);
+    _initializeTaggerService();
+  }
+
+  Future<void> _initializeTaggerService() async {
+    final messenger = ref.read(messengerProvider.notifier);
+    final availableTags = await ref.read(tagsProvider.future);
+    
+    _taggerService = OllamaTaggerService(
+      messenger: messenger,
+      availableTags: availableTags,
+    );
   }
 
   @override
@@ -55,6 +70,47 @@ class _LogbookEntryEditorState extends ConsumerState<LogbookEntryEditor> {
     );
 
     Navigator.of(context).pop(updatedEntry);
+  }
+
+  Future<void> _generateTags() async {
+    final text = _textController.text.trim();
+    if (text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter some text first')),
+      );
+      return;
+    }
+
+    if (_taggerService == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Tagger service not initialized')),
+      );
+      return;
+    }
+
+    setState(() {
+      _isGeneratingTags = true;
+    });
+
+    try {
+      final extractedTags = await _taggerService!.extractTags(text);
+      
+      setState(() {
+        _tags = extractedTags;
+        _isGeneratingTags = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Generated ${extractedTags.length} tags')),
+      );
+    } catch (e) {
+      setState(() {
+        _isGeneratingTags = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error generating tags: $e')),
+      );
+    }
   }
 
   @override
@@ -135,6 +191,34 @@ class _LogbookEntryEditorState extends ConsumerState<LogbookEntryEditor> {
                   error: (error, stack) => Text('Error loading tags: $error'),
                 );
               },
+            ),
+            const SizedBox(height: 16),
+
+            // Generate tags button
+            ElevatedButton(
+              onPressed: _isGeneratingTags ? null : _generateTags,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                foregroundColor: Theme.of(context).colorScheme.onSecondary,
+              ),
+              child: _isGeneratingTags
+                  ? const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                        SizedBox(width: 8),
+                        Text('Generating tags...'),
+                      ],
+                    )
+                  : const Text(
+                      'Generate tags from text',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
             ),
             const Spacer(),
 
